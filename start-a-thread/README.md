@@ -1,11 +1,13 @@
 Lifecyle của một thread
-- NEW: khởi tạo thread, code chưa được chạy và execution process chưa được khởi tạo
+- Start: khởi tạo thread, code chưa được chạy và execution process chưa được khởi tạo
 - Runnable: assign thread cho một task nhưng chưa thực sự chạy
 - Running: thực thi task cho đến khi hoàn thành
 - Waiting: các process có thể phụ thuộc lẫn nhau dẫn đến chúng có thể phải đợi nhau để hoàn thành task
-- Dead: kết thúc thread do JVM quản lý
+- Terminated: kết thúc thread do JVM quản lý
+- Blocked
 
-![img.png](img.png)
+![img_1.png](img_1.png)
+[Source](https://www.baeldung.com/java-interrupted-exception#:~:text=An%20InterruptedException%20is%20thrown%20when,in%20Java%20can%20throw%20it.)
 ***
 Multithreading in Java?
 
@@ -15,36 +17,58 @@ Một số phương thức trong Java:
 <table>
 <tr>
 <td>start()</td>
+<td>
+
+Đơn giản như cái tên, nhìn quá lifecycle để hiểu hơn
+- Khi chạy một chương trình Java, một thread sẽ được JVM khởi tạo gọi là `Main Thread`, cùng với một số `daemon thread` chạy ngầm với độ ưu tiên thấp khác. 
+- `Main Thread` này sẽ đi tìm phương thức main và thực thi code trong đó.
+</td>
 </tr>
 <tr>
 <td>currentThread()</td>
+<td>
+</td>
 </tr>
 <tr>
-<td>run()</td>
+<td>run()</td><td></td>
 </tr>
 <tr>
-<td>isAlive()</td>
+<td>isAlive()</td><td></td>
 </tr>
 <tr>
 <td>sleep()</td>
+<td>
+
+Thread.sleep() được dùng để tạm ngưng quá trình của thread hiện tại trong một khoảng thời gian
+- Thời gian không thể là số âm nếu không sẽ báo lỗi IllegalArgumentException.
+- Thread sẽ được gán cho trạng thái **WAITING** tương ứng trong lifecycle.
+- Hết khoảng thời gian chờ sẽ chuyển sang trạng thái Runnable.
+- Khoảng thời gian chờ thực sự sẽ >= thời gian sleep phụ thuộc vào bộ lập và bộ hẹn giờ của hệ thống, nếu hệ thống đang bận thì có thể hết thời gian sleep mà hành động của thread vẫn chưa được thực thi.
+- Một *InterruptException* sẽ được ném ra khi một thread bị interrupted trong khi nó đang waiting, sleeping hoặc bị chiếm giữ vì vậy khi dùng sleep() phải throw ngoại lệ này.
+
+*Note*:
+- Chúng ta có thể tuỳ chỉnh để xử lý ngoại lệ, trong demo mình tái hiện exception khi gọi interrupt()
+
+Mình sẽ bổ sung phần handle exception sau
+</td>
 </tr>
 <tr>
-<td>yield()</td>
+<td>yield()</td><td></td>
 </tr>
 <tr>
-<td>suspend()</td>
+<td>suspend()</td><td></td>
 </tr>
 <tr>
-<td>resume()</td>
+<td>resume()</td><td></td>
 </tr>
 <tr>
-<td>interrupt()</td>
+<td>interrupt()</td><td></td>
 </tr>
 <tr>
-<td>destroy()</td>
+<td>destroy()</td><td></td>
 </tr>
 <tr>
-<td>stop()</td>
+<td>stop()</td><td></td>
 </tr>
 </table>
 
