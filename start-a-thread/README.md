@@ -62,7 +62,14 @@ Mình sẽ bổ sung phần handle exception sau
 <td>resume()</td><td></td>
 </tr>
 <tr>
-<td>interrupt()</td><td></td>
+<td>interrupt()</td>
+<td>
+Phương thức này biểu thị một thread nên dừng việc nó đang làm để làm một việc khác, về cách phản ứng của thread với phương thức này người lập trình có thể định nghĩa nó thông qua việc catch InterruptException trong run() method hoặc throw ra exception cho phương thức sử dụng nó xử lý.
+
+Bên cạnh `void interrupt()` method dùng để làm giãn đoạn một thread, chúng ta còn có thêm 2 phương thức phụ trợ nữa:
+- [boolean isInterrupted()](./src/interrupt/InterruptWithThrowsException.java): kiểm tra xem current thread có bị giãn đoạn hay không, mà nó không thay đổi giá trị flag của thời chỉ kiểm tra trạng thái. Uncommed `1` trong ví dụ để thấy sự khác biệt.
+- `boolean interrupted()`: giống cái trên chỉ có một điều khác biệt là nó sẽ thay đổi giá trị flag về false, nghĩa là nếu trước đó gọi interrupt() (lúc này giá trị flag của thread là true), sau đó gọi interrupted() thì nó lại set về false.
+</td>
 </tr>
 <tr>
 <td>destroy()</td><td></td>
