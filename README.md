@@ -16,4 +16,4 @@ Concurrency có thể thực hiện ngay cả trên các hệ thống đơn gi�
 - Thread chia sẻ tài nguyên process bao gồm memory và open files, điều này làm cho việc giap tiếp hiệu quả những cũng dẫn tới nhiều vấn đề.
 ***
 Một số phần tìm hiểu và làm rõ
-- [Khai báo và chạy một thread](./start-a-thread)
+- [thread basic](./thread-basic)
