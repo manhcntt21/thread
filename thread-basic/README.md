@@ -77,6 +77,18 @@ Bên cạnh `void interrupt()` method dùng để làm giãn đoạn một threa
 <tr>
 <td>stop()</td><td></td>
 </tr>
+<tr>
+<td>join()</td>
+<td>
+Cho phép thread hiện tại (ví dụ Main Thread) đợi một thread khác (t1) hoàn thành nhiệm vụ của nó và rơi vào trạng thái (dead), Main Thread sẽ tạm dừng (nó rơi vào trạng thái waiting)
+
+Nếu Main Thread bị giãn đoán nó sẽ ném ra InterruptException
+
+Ngoài việc đợi cho t1 dead, chúng ta cũng có thể chỉ định một khoảng thời gian chờ của Main Thread.
+
+Giống như sleep(), thời gian chờ phụ thuộc vào bộ lập lịch và bộ hẹn giờ, không phải luôn bằng giá trị chúng ta thiết lập
+</td>
+</tr>
 </table>
 
 ***
