@@ -27,13 +27,20 @@ Một số phương thức trong Java:
 <tr>
 <td>currentThread()</td>
 <td>
+Trả về tham chiếu tới thread object đang thực thi
 </td>
 </tr>
 <tr>
-<td>run()</td><td></td>
+<td>run()</td>
+<td>
+Kích hoạt một hành động cho thread
+</td>
 </tr>
 <tr>
-<td>isAlive()</td><td></td>
+<td>isAlive()</td>
+<td>
+Kiểm tra thread còn sống không?
+</td>
 </tr>
 <tr>
 <td>sleep()</td>
@@ -53,13 +60,18 @@ Mình sẽ bổ sung phần handle exception sau
 </td>
 </tr>
 <tr>
-<td>yield()</td><td></td>
+<td>yield()</td><td>...</td>
 </tr>
 <tr>
-<td>suspend()</td><td></td>
+<td>suspend()</td>
+<td>
+Tạm ngừng việc thực thi luông
+</td>
 </tr>
 <tr>
-<td>resume()</td><td></td>
+<td>resume()</td><td>
+Tiếp tục thực hiện một luồng bị treo
+</td>
 </tr>
 <tr>
 <td>interrupt()</td>
@@ -72,10 +84,16 @@ Bên cạnh `void interrupt()` method dùng để làm giãn đoạn một threa
 </td>
 </tr>
 <tr>
-<td>destroy()</td><td></td>
+<td>destroy()</td>
+<td>
+Dừng việc thực thi của một group of threads
+</td>
 </tr>
 <tr>
-<td>stop()</td><td></td>
+<td>stop()</td>
+<td>
+Dừng việc thực thi một luồng
+</td>
 </tr>
 <tr>
 <td>join()</td>
