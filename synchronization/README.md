@@ -2,6 +2,9 @@ Outline
 1. [thread interference](#thread-interference)
 2. [memory consistency errors](#memory-consistency-errors)
 3. [synchronization](#synchronization)
+4. [intrinsic locks](#intrinsic-lock)
+   1. [synchronized statements](#synchronized-statements)
+   2. [re-entrant synchronization](#re-entrant-synchronization)
 
 ***
 Các threads giao tiếp chủ yếu bằng cách chia sẻ truy cập vào các fields và objects reference fields refer to
@@ -108,5 +111,51 @@ Bên cạnh đó còn một số phương pháp khác:
 - hạn chế truy cập cùng đối tượng bởi nhiều luồng
 - ...
 ***
+## intrinsic locks
+Synchronization được xây dựa trên một thực thể bên trong gọi là *intrinsic lock* or *monitor lock*, nó đóng vai trò trong cả hai khía cạnh của synchronization
+- giảm sát quyền truy cập độc quyền của trạng thái đối tượng
+- thiết lập mối happens-before relationship
 
+Mọi object đều có một intrinsic lock gắn liền với nó, vì vậy một thread muốn truy cập độc quyền và nhất quán vào các trường của đối tượng cần có được intrinsic lock của đối tượng trước khi thực hiện điều đó
 
+Trong thời gian một thread sở hữu intrinsic lock, các thread khác sẽ bị block khi cố gắng lấy khoá. Sau khi thread giải phóng khoá nó sẽ thiết lập happens-before relationship với bất kì thread nào lấy khoá sau đó.
+
+Khi một thread gọi một synchronized method, nó tự động yêu cầu intrinsic lock và giải phóng khoá khi phương thức return.
+
+Đối với trường hợp **static method**, thread sẽ yêu cầu intrinsic lock cho class và nó khác hoàn toàn với bất kì intrinsic lock của instance. Như vậy, nó sẽ lock toàn bộ phương thức của class
+***
+### synchronized statements
+Không giống như synchronized method, synchronized statement phải chỉ định rõ object cung cấp intrinsic lock
+```java
+public void addName(String name) {
+    synchronized(this) {
+        lastName = name;
+        nameCount++;
+    }
+    nameList.add(name);
+}
+```
+Trong ví dụ trên addName() cần synchronize để thay đổi lastName, nameCount, lúc này lastName, nameCount sẽ bị lock để đảm bảo không có thread nào có thể truy cập như synchronized method. Việc gọi các phương thức khác (add method) của các đối tượng khác (nameList) trong synchronized code được gọi là `Liveness`. Hay nói cách khác, việc gọi các phương thức khác trong lúc giữ monitor lock, sẽ liên quan đến khái niệm `liveness`. Được trình bày ở phần sau.
+
+Ngoài ra, synchronized statements cũng ưu ích cho việc cải thiện tính concurrency ([MsLunch2](./src/synchronizedstatement/MsLunch2.java) chậm hơn [MsLunch](./src/synchronizedstatement/MsLunch.java)) vì các thread truy cập `inc1()` và `inc2()` không block lẫn nhau như synchronized method. Vì vậy chúng có thể chạy đồng thời và độc lập, khiến thời gian chạy nhanh hơn.
+***
+### re-entrant synchronization
+Một thread không thể có được lock đang chiếm giữ bởi một thread khác, tuy nhiên một thread có thể giữ cùng một khoá nhiều lần không bị block
+```java
+public class ReentrantExample {
+    private final Object lock = new Object();
+
+    public synchronized void outerMethod() {
+        // do something
+
+        innerMethod(); // it can acquire the lock again 
+
+        // do something
+    }
+
+    public synchronized void innerMethod() {
+        // do something
+    }
+}
+```
+Ưu điểm: đơn giản hoá thiết kế của một số thuật toán và cấu trúc dữ liệu nơi mà các phương thức có thể cần gọi lại nhau đệ quy hoặc nơi mà một phương thức cấp cao hơn cần khoá giống như một phương thức cấp thấp hơn mà nó gọi
