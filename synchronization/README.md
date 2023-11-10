@@ -135,7 +135,9 @@ public void addName(String name) {
     nameList.add(name);
 }
 ```
-Trong ví dụ trên addName() cần synchronize để thay đổi lastName, nameCount, lúc này lastName, nameCount sẽ bị lock để đảm bảo không có thread nào có thể truy cập như synchronized method. Việc gọi các phương thức khác (add method) của các đối tượng khác (nameList) trong synchronized code được gọi là `Liveness`. Hay nói cách khác, việc gọi các phương thức khác trong lúc giữ monitor lock, sẽ liên quan đến khái niệm `liveness`. Được trình bày ở phần sau.
+Trong ví dụ trên addName() cần synchronize để thay đổi lastName, nameCount, lúc này lastName, nameCount sẽ bị lock để đảm bảo không có thread nào có thể truy cập như synchronized method. 
+
+Việc gọi các phương thức khác (add method) của các đối tượng khác (nameList) trong synchronized code sẽ tạo ra một vài vấn đề liên quan đến `thread contention`, đề cập ở phần `liveness`. Hay nói cách khác, việc gọi các phương thức khác trong lúc giữ monitor lock, sẽ liên quan đến vấn đề trong `liveness`. Được trình bày ở phần tiếp theo.
 
 Ngoài ra, synchronized statements cũng ưu ích cho việc cải thiện tính concurrency ([MsLunch2](./src/synchronizedstatement/MsLunch2.java) chậm hơn [MsLunch](./src/synchronizedstatement/MsLunch.java)) vì các thread truy cập `inc1()` và `inc2()` không block lẫn nhau như synchronized method. Vì vậy chúng có thể chạy đồng thời và độc lập, khiến thời gian chạy nhanh hơn.
 ***
