@@ -5,7 +5,7 @@ Outline
 4. [intrinsic locks](#intrinsic-lock)
    1. [synchronized statements](#synchronized-statements)
    2. [re-entrant synchronization](#re-entrant-synchronization)
-
+5. [atomic access](#atomic-access)
 ***
 Các threads giao tiếp chủ yếu bằng cách chia sẻ truy cập vào các fields và objects reference fields refer to
 
@@ -159,3 +159,20 @@ public class ReentrantExample {
 }
 ```
 Ưu điểm: đơn giản hoá thiết kế của một số thuật toán và cấu trúc dữ liệu nơi mà các phương thức có thể cần gọi lại nhau đệ quy hoặc nơi mà một phương thức cấp cao hơn cần khoá giống như một phương thức cấp thấp hơn mà nó gọi
+***
+## atomic access
+atomic action chứa các tiêu chí sau:
+- một hành động thực hiện hoàn toàn mà không bị giãn đoạn, hoàn thành đầu đủ hoặc không hoàn thành cái gì
+- nó xuất hiện như là một hành động xảy ra tức thì dưới góc độ của một thread khác
+- không thể bị chia nhỏ
+- không side effect cho đến khi nó được hoàn tất
+
+một số hành động có thể chỉ định atomic
+- read & write là atomic đối với các reference variables và hấu hết các primitive variables (ngoại trừ long và double)
+- read & write là atomic đối với **tất cả** các biến khai báo với từ khoá `volatile`
+
+atomic không thể bị interleaved, vì vậy có thể sử dụng mà không sợ `thread interference`, tuy nhiên vẫn có thể xảy ra `memory consistency errors`. Sử dụng `volatile` để giảm nguy cơ `memory consistency errors`.
+- volatile thiết lập happens-before relationships
+
+*chú ý*:
+- Việc sử dụng atomic variable access là đơn giản hơn so với accessing these through synchronized code, nhưng yêu cầu người lập trình phải xử lý thêm để tránh memory consistency errors.
