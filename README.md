@@ -18,3 +18,4 @@ Concurrency có thể thực hiện ngay cả trên các hệ thống đơn gi�
 Một số phần tìm hiểu và làm rõ
 - [thread basic](./thread-basic)
 - [synchronization](./synchronization)
+- [liveness](./liveness)
