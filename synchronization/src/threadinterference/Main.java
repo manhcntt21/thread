@@ -7,8 +7,10 @@ package threadinterference;
 public class Main {
     public static void main(String[] args) {
 //         thread interference
-        Counter counter = new Counter();
+//        Counter counter = new Counter();
 
+        // synchronized method to avoid thread interference
+        SynchronizedCounter counter = new SynchronizedCounter();
 
         Thread t1 = new Thread(() -> {
             for(int i = 0 ; i < 1000; i++) {
